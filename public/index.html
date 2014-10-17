@@ -1,0 +1,149 @@
+<!doctype html>
+<html ng-app="gradeApp">
+  <head>
+    <meta charset="UTF-8">
+    <script src="js/angular.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/service.js"></script>
+    <script src="js/ngDialog.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/ngDialog.css">
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body ng-controller="Ctrl">
+
+  <div class="wrapper">
+    
+
+      <div class="container">
+        <div class="col-sm-5">
+          <div class="form-group">
+              <input type="text" class="form-control" id="inputSearch" ng-model="inputSearch.subject"
+                placeholder="ค้นหา">
+            </div>
+          </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+               <select class="form-control" ng-model="inputOrder" >
+                <option value="subject">วิชา</option>
+                <option value="grade">เกรด</option>
+                 <option value="credit">credit</option>
+              </select></td>
+            </div>
+          </div>
+
+       <button type="button" ng-dialog="firstDialogId" ng-dialog-controller="InsideCtrl" 
+       ng-dialog-class="ngdialog-theme-default" 
+       ng-dialog-show-close="false">Open via directive</button>
+
+       
+  </div> <!-- container -->   
+
+  <div class="container"> 
+
+    <table class="table table-bordered">
+
+      <thead>
+        <th>ลำดับ</th>
+        <th>ชื่อ</th>
+        <th>เครดิต</th>
+        <th>เกรด</th>
+        <th>เครื่องมือ</th>
+      </thead>
+
+        <tr ng-repeat="grade in grades | filter:inputSearch | orderBy:inputOrder" >
+
+          <h1 ng-show="(grades | filter:inputSearch).length == 0">Nothing here</h1>
+
+          <td class="col-sm-1">{{$index+1}}</td>
+
+          <td ><input type="text" ng-change="edit(grade)" ng-model="grade.subject" style="border:0px;"></td>
+
+          <td class="col-sm-1">
+            <select class="form-control" ng-change="edit(grade)" ng-model="grade.credit">
+              <option>1</option>
+              <option>3</option>
+            </select></td>
+
+          <td class="col-sm-1">
+            <select class="form-control" ng-change="edit(grade)" ng-model="grade.grade">
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>C+</option>
+              <option>C</option>
+              <option>D+</option>
+              <option>D</option>
+              <option>F</option>
+            </select>
+          </td>
+
+          <td class="col-sm-2"> <button type="button" class="btn btn-danger" ng-click="delete(grade._id)"><i class="fa fa-trash-o"></i></button> 
+          <button type="button" class="btn btn-primary" ng-click="edit(grade)"><i class="fa fa-pencil-square-o"></i></button>
+          </td>
+        </tr>
+
+    </table>
+
+  </div> <!-- container -->
+
+ <!--  //////////////////////////////////////// -->
+
+  <div class="container">
+
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="inputSubject" class="col-sm-2 control-label">Subject</label>
+        <div class="col-sm-7">
+          <input type="text" class="form-control" id="inputSubject" ng-model="inputSubject" placeholder="ชื่อ">
+        </div>
+      </div>
+
+     <div class="form-group"> 
+     <label for="inputCredit" class="col-sm-2 control-label">Credit</label>
+      <div class="col-sm-4">
+        <select class="form-control" ng-model="inputCredit">
+          <option>1</option>
+          <option>3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group"> 
+    <label for="inputGrade" class="col-sm-2 control-label">Grade</label>
+      <div class="col-sm-4">
+        <select class="form-control" ng-model="inputGrade">
+          <option>A</option>
+          <option>B+</option>
+          <option>B</option>
+          <option>C+</option>
+          <option>C</option>
+          <option>D+</option>
+          <option>D</option>
+          <option>F</option>
+        </select>
+      </div>
+    </div>
+
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default" ng-click="addGrade(inputSubject,inputCredit,inputGrade)">submit</button>
+        </div>
+      </div>
+</form>
+
+  </div> <!-- container -->
+
+  </div> <!-- wrapper -->
+
+
+
+
+  </body>
+</html>
